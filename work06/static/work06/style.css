@@ -1,0 +1,39 @@
+body {
+    background-color: #f0f8ff;
+    font-family: sans-serif;
+}
+
+h1 {
+    color: darkblue;
+}
+
+a {
+    color: darkred;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+button {
+    background-color: darkblue;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+button:hover {
+    background-color: blue;
+}
+input {
+    padding: 5px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+label {
+    font-weight: bold;
+}
+form {
+    margin-top: 20px;
+}

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Djangoのテストページ</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'work05/style.css' %}">
+</head>
+<body>
+    <h1>こんにちは、Django!</h1>
+    <p>これはテンプレートから表示しています。</p>
+    <img src="{% static 'work05/images/image.png' %}" alt="なんか画像">
+</body>
+</html>
