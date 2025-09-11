@@ -3,7 +3,9 @@ from django.shortcuts import render
 
 
 def index(request):
-    return render(request, "work05/index.html")
+    name = "Django"
+    age = 7
+    return render(request, "work05/index.html", {"name": name, "age": age})
 
 
 def list(request):
