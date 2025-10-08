@@ -1,0 +1,26 @@
+<!-- メモ帳アプリの一覧画面-->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>メモ帳アプリ</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'work08/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>メモ帳アプリ</h1>
+        <a class="button" href="{% url 'create' %}">新規作成</a>
+        <hr>
+        <h2>メモ一覧</h2>
+        <div class="memos">
+            {% for memo in memos %}
+                <ul class="list-table">
+                    <li class="table-row"><a href="{% url 'edit' memo.id %}">編集</a><span>{{ memo.title }}</span></li>
+                </ul>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

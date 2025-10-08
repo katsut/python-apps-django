@@ -1,0 +1,100 @@
+body {
+    background-color: #f0f8ff;
+    font-family: sans-serif;
+}
+
+h1 {
+    color: darkblue;
+}
+
+a {
+    color: darkred;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+button {
+    background-color: darkred;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+button:hover {
+    background-color: rgba(201, 61, 61, 0.459);
+}
+input {
+    padding: 5px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+label {
+    font-weight: bold;
+}
+form {
+    margin-top: 20px;
+}
+
+.container {
+    width: 80%;
+    margin: auto;
+    overflow: hidden;
+}
+.memo {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+}
+h2 {
+    margin: 0;
+    color: darkgreen;
+} 
+p {
+    margin: 5px 0 0 0;
+}
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+ul li {
+    display: inline;
+    margin-right: 10px;
+} 
+ul li a {
+    color: darkred;
+}
+
+.button {
+    background-color: darkred;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+}
+.button:hover {
+    background-color: red;
+}
+
+.memos .list-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.memos .table-row {
+    border-bottom: 1px solid #ccc;
+    padding: 10px 0;
+}
+.memos .table-row a {
+    min-width: 20%;
+}
+.memos .table-row span {
+    padding: 10px;
+    display: inline-block;
+    min-width: 80%;
+}
+.memos .table-row:hover {
+    background-color: #f1f1f1;
+}

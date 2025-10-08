@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>おみくじ</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'work07/style.css' %}">
+</head>
+<body>
+    <h1>おみくじ</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">おみくじを引く</button>
+    </form>
+
+    {% if result %}
+        <h2>結果: {{ result }}</h2>
+    {% endif %}
+</body>
+</html>
