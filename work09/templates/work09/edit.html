@@ -1,0 +1,53 @@
+<!-- TODOアプリの編集画面-->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>タスク編集 - TODOアプリ</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'work09/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>TODOアプリ</h1>
+        
+        <!-- メッセージ表示 -->
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        
+        <!-- タスク編集フォーム -->
+        <h2>タスクの編集</h2>
+        <form method="post" action="{% url 'work09:update' todo.id %}" class="edit-form">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="{{ form.title.id_for_label }}">タスク名:</label>
+                {{ form.title }}
+            </div>
+            <div class="form-group">
+                <label for="{{ form.due_date.id_for_label }}">期限日:</label>
+                {{ form.due_date }}
+            </div>
+            <div class="form-group checkbox-group">
+                {{ form.is_completed }}
+                <label for="{{ form.is_completed.id_for_label }}">完了</label>
+            </div>
+            <div class="button-group">
+                <button type="submit" class="btn btn-primary">更新</button>
+                <a href="{% url 'work09:top' %}" class="btn btn-secondary">キャンセル</a>
+            </div>
+        </form>
+        
+        <!-- 削除フォーム -->
+        <form method="post" action="{% url 'work09:delete' todo.id %}" class="delete-form" onsubmit="return confirm('本当に削除しますか？');">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">削除</button>
+        </form>
+    </div>
+</body>
+</html>

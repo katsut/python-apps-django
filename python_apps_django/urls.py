@@ -24,4 +24,5 @@ urlpatterns = [
     path("work06/", include("work06.urls")),
     path("work07/", include("work07.urls")),
     path("work08/", include("work08.urls")),
+    path("work09/", include("work09.urls")),
 ]
