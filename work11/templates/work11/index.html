@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>献立決定アプリ - Gemini AI</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>🍳 献立決定アプリ</h1>
+        <p class="subtitle">お手持ちの材料を入力すると、Gemini AIがおすすめの料理を提案します</p>
+        
+        <!-- メッセージ表示 -->
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        
+        <!-- 材料入力フォーム -->
+        <div class="form-section">
+            <form method="post" id="ingredientForm">
+                {% csrf_token %}
+                
+                {% for field in form %}
+                    <div class="form-group">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.errors %}
+                            <div class="error">
+                                {% for error in field.errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+                
+                <button type="submit" class="btn" id="submitBtn">
+                    🤖 料理を提案してもらう
+                </button>
+            </form>
+        </div>
+        
+        <!-- レシピ結果表示 -->
+        {% if recipe_result %}
+            <div class="result-section">
+                <h3 class="result-title">🍽️ おすすめ料理</h3>
+                
+                <div class="ingredients-used">
+                    <h4>使用した材料:</h4>
+                    <p>{{ recipe_result.ingredients_used|join:"、" }}</p>
+                </div>
+                
+                {% if recipe_result.dish_name %}
+                    <!-- 構造化されたレスポンス -->
+                    <div class="dish-name-section">
+                        <h4>🍳 料理名</h4>
+                        <p class="dish-name">{{ recipe_result.dish_name }}</p>
+                    </div>
+                    
+                    <div class="additional-ingredients-section">
+                        <h4>🛒 追加で必要な材料</h4>
+                        <p class="additional-ingredients">{{ recipe_result.additional_ingredients }}</p>
+                    </div>
+                    
+                    <div class="description-section">
+                        <h4>📝 料理の説明</h4>
+                        <p class="description">{{ recipe_result.description }}</p>
+                    </div>
+                {% else %}
+                    <!-- フォールバック（JSON解析失敗時） -->
+                    <div class="recipe-content">
+                        {{ recipe_result.recipe_text }}
+                    </div>
+                {% endif %}
+            </div>
+        {% endif %}
+        
+        <!-- ナビゲーションリンク -->
+        <div class="nav-links">
+            <a href="/">← トップページに戻る</a>
+        </div>
+    </div>
+    
+    <script>
+        // フォーム送信時のローディング表示
+        document.getElementById('ingredientForm').addEventListener('submit', function() {
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '🤖 料理を考え中...';
+        });
+        
+        // 入力フィールドのEnterキーでフォーム送信を防ぐ
+        document.querySelectorAll('input[type="text"]').forEach(function(input) {
+            input.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    // 次の入力フィールドにフォーカス、または送信
+                    const inputs = Array.from(document.querySelectorAll('input[type="text"]'));
+                    const currentIndex = inputs.indexOf(this);
+                    if (currentIndex < inputs.length - 1) {
+                        inputs[currentIndex + 1].focus();
+                    } else {
+                        document.getElementById('submitBtn').click();
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
