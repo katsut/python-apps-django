@@ -1,0 +1,155 @@
+<!-- TODOアプリの一覧画面-->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TODOアプリ</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'work10/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>TODOアプリ</h1>
+            <div class="nav-links">
+                <a href="/" class="btn btn-link">← トップページに戻る</a>
+            </div>
+        </header>
+        
+        <!-- メッセージ表示 -->
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        
+        <!-- 新規タスク作成フォーム（ログインユーザーのみ） -->
+        {% if user.is_authenticated %}
+            <h2>新しいタスクを追加</h2>
+            <form method="post" class="create-form">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="{{ form.title.id_for_label }}">タスク名:</label>
+                    {{ form.title }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.due_date.id_for_label }}">期限日:</label>
+                    {{ form.due_date }}
+                </div>
+                <button type="submit" class="btn btn-primary">登録</button>
+            </form>
+        {% else %}
+            <div class="login-notice">
+                <p>タスクを作成するには<a href="/login/">ログイン</a>してください。</p>
+            </div>
+        {% endif %}
+        
+        <!-- TODO一覧 -->
+        <h2>TODO一覧</h2>
+        
+        <!-- フィルタ選択 -->
+        <div class="filter-controls">
+            <span class="filter-label">表示:</span>
+            <a href="?filter=all&sort={{ current_sort }}&order={{ current_order }}" 
+               class="filter-link {% if current_filter == 'all' %}active{% endif %}">全て</a>
+            <a href="?filter=incomplete&sort={{ current_sort }}&order={{ current_order }}" 
+               class="filter-link {% if current_filter == 'incomplete' %}active{% endif %}">未完了のみ</a>
+            <a href="?filter=complete&sort={{ current_sort }}&order={{ current_order }}" 
+               class="filter-link {% if current_filter == 'complete' %}active{% endif %}">完了済みのみ</a>
+        </div>
+        
+        <div class="sort-info">
+            現在の表示: {{ filter_label }} | ソート: {{ sort_label }} ({{ order_label }})
+        </div>
+        {% if todos %}
+            <table class="todo-table">
+                <thead>
+                    <tr>
+                        <th>完了状態</th>
+                        <th class="sortable">
+                            <a href="?filter={{ current_filter }}&sort=title&order={% if current_sort == 'title' and current_order == 'asc' %}desc{% else %}asc{% endif %}">
+                                タスク名
+                                {% if current_sort == 'title' %}
+                                    {% if current_order == 'asc' %}↑{% else %}↓{% endif %}
+                                {% endif %}
+                            </a>
+                        </th>
+                        <th>作成者</th>
+                        <th class="sortable">
+                            <a href="?filter={{ current_filter }}&sort=due_date&order={% if current_sort == 'due_date' and current_order == 'asc' %}desc{% else %}asc{% endif %}">
+                                期限日
+                                {% if current_sort == 'due_date' %}
+                                    {% if current_order == 'asc' %}↑{% else %}↓{% endif %}
+                                {% endif %}
+                            </a>
+                        </th>
+                        <th class="sortable">
+                            <a href="?filter={{ current_filter }}&sort=created_at&order={% if current_sort == 'created_at' and current_order == 'asc' %}desc{% else %}asc{% endif %}">
+                                登録日
+                                {% if current_sort == 'created_at' %}
+                                    {% if current_order == 'asc' %}↑{% else %}↓{% endif %}
+                                {% endif %}
+                            </a>
+                        </th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for todo in todos %}
+                        <tr class="{% if todo.is_completed %}completed{% elif todo.due_date and todo.due_date < today %}overdue{% endif %}">
+                            <td>
+                                {% if todo.is_completed %}
+                                    完了
+                                {% else %}
+                                    未完了
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if user.is_authenticated and todo.user == user %}
+                                    <a href="{% url 'work10:edit' todo.id %}">{{ todo.title }}</a>
+                                {% else %}
+                                    {{ todo.title }}
+                                {% endif %}
+                            </td>
+                            <td>{{ todo.user.username }}</td>
+                            <td>
+                                {% if todo.due_date %}
+                                    {{ todo.due_date }}
+                                {% else %}
+                                    未設定
+                                {% endif %}
+                            </td>
+                            <td>{{ todo.created_at|date:"Y/m/d H:i" }}</td>
+                            <td>
+                                {% if user.is_authenticated and todo.user == user %}
+                                    <form method="post" action="{% url 'work10:toggle_complete' todo.id %}" style="display: inline;">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-sm {% if todo.is_completed %}btn-warning{% else %}btn-success{% endif %}">
+                                            {% if todo.is_completed %}
+                                                未完了に戻す
+                                            {% else %}
+                                                完了
+                                            {% endif %}
+                                        </button>
+                                    </form>
+                                    <form method="post" action="{% url 'work10:delete' todo.id %}" style="display: inline;" onsubmit="return confirm('本当に削除しますか？');">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-sm btn-danger">削除</button>
+                                    </form>
+                                {% else %}
+                                    <span class="text-muted">-</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p class="no-todos">まだタスクがありません。</p>
+        {% endif %}
+    </div>
+</body>
+</html>
