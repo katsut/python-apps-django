@@ -1,15 +1,20 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>リアルタイムチャット</title>
-    <link rel="stylesheet" href="{% static 'work12/style.css' %}">
-</head>
-<body>
+
+{% block title %}Work 12 - リアルタイムチャット{% endblock %}
+
+{% block subtitle %}
+<div class="page-subtitle">Work 12: Django Channelsを使ったリアルタイムチャットアプリ</div>
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'work12/style.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
     <h1>リアルタイムチャット</h1>
-    <p>ログイン中: <strong>{{ user.username }}</strong> | <a href="{% url 'logout' %}">ログアウト</a></p>
+    <p>ログイン中: <strong>{{ user.username }}</strong></p>
     
     <div id="messages">
         {% for message in messages %}
@@ -24,33 +29,39 @@
     <div class="input-container">
         <input type="text" id="message-input" placeholder="メッセージを入力...">
     </div>
+    
+    <div style="margin-top: 30px;">
+        <a href="/" class="btn btn-secondary">ホームに戻る</a>
+    </div>
+</div>
+{% endblock %}
 
-    <script>
-        // WebSocket接続
-        const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-        const wsUrl = protocol + '//' + window.location.host + '/ws/chat/';
-        const socket = new WebSocket(wsUrl);
-        
-        // メッセージを受信したら画面に表示
-        socket.onmessage = function(e) {
-            const data = JSON.parse(e.data);
-            const messages = document.getElementById('messages');
-            messages.innerHTML += '<div class="message"><span class="username">' + data.username + ':</span> ' + data.message + '</div>';
-            messages.scrollTop = messages.scrollHeight;
-        };
-        
-        // Enterキーでメッセージ送信
-        document.getElementById('message-input').onkeypress = function(e) {
-            if (e.key === 'Enter') {
-                const messageInput = this;
-                if (messageInput.value.trim()) {
-                    socket.send(JSON.stringify({
-                        'message': messageInput.value
-                    }));
-                    messageInput.value = '';
-                }
+{% block extra_js %}
+<script>
+    // WebSocket接続
+    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+    const wsUrl = protocol + '//' + window.location.host + '/ws/chat/';
+    const socket = new WebSocket(wsUrl);
+    
+    // メッセージを受信したら画面に表示
+    socket.onmessage = function(e) {
+        const data = JSON.parse(e.data);
+        const messages = document.getElementById('messages');
+        messages.innerHTML += '<div class="message"><span class="username">' + data.username + ':</span> ' + data.message + '</div>';
+        messages.scrollTop = messages.scrollHeight;
+    };
+    
+    // Enterキーでメッセージ送信
+    document.getElementById('message-input').onkeypress = function(e) {
+        if (e.key === 'Enter') {
+            const messageInput = this;
+            if (messageInput.value.trim()) {
+                socket.send(JSON.stringify({
+                    'message': messageInput.value
+                }));
+                messageInput.value = '';
             }
-        };
-    </script>
-</body>
-</html>
+        }
+    };
+</script>
+{% endblock %}

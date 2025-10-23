@@ -1,0 +1,67 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Python Apps Django{% endblock %}</title>
+    
+    <!-- Base CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
+    
+    <!-- App-specific CSS -->
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <div class="header-left">
+                <a href="/" class="header-brand">Python Apps Django</a>
+                <nav class="header-nav">
+                    <a href="/">ホーム</a>
+                </nav>
+            </div>
+            
+            <div class="header-user">
+                {% if user.is_authenticated %}
+                    <span class="user-info">{{ user.username }}さん</span>
+                    <form method="post" action="/logout/" style="display: inline-flex; align-items: center; margin: 0;">
+                        {% csrf_token %}
+                        <button type="submit" class="header-logout-btn">ログアウト</button>
+                    </form>
+                {% else %}
+                    <div class="header-user-links">
+                        <a href="/login/" class="header-login-link">ログイン</a>
+                        <a href="/signup/" class="header-signup-link">新規登録</a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Subtitle -->
+    {% block subtitle %}{% endblock %}
+
+    <!-- Main Content -->
+    <main class="main-content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="/">ホーム</a>
+                <a href="https://github.com/katsut/python-apps-django">Github</a>
+            </div>
+            <div class="footer-copyright">
+                <p>&copy; 2025 katsut. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- App-specific JavaScript -->
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

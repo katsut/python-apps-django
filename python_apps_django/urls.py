@@ -21,7 +21,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.views.generic import CreateView
 from django.urls import path, include, reverse_lazy
 from . import views
-from django.contrib.auth import urls
+
 
 urlpatterns = [
     path("", views.index, name="index"),
@@ -40,7 +40,7 @@ urlpatterns = [
         auth_views.LoginView.as_view(redirect_authenticated_user=True),
         name="login",
     ),
-    path("logout/", auth_views.LogoutView.as_view(next_page="/login/"), name="logout"),
+    path("logout/", auth_views.LogoutView.as_view(next_page="/"), name="logout"),
     path(
         "signup/",
         CreateView.as_view(

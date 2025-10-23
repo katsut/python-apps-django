@@ -1,15 +1,24 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <title>令和何年ですかツール</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'work06/style.css' %}">
-</head>
-<body>
-    <h1>いろいろ計算ツール</h1>
+{% extends 'base.html' %}
+{% load static %}
 
+{% block title %}Work 06 - いろいろ計算ツール{% endblock %}
+
+{% block subtitle %}
+<div class="page-subtitle">Work 06: いろいろ計算ツール</div>
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'work06/style.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
     <ul>
-        <li><a href="{% url 'reiwa' %}">令和何年ですかツール</a></li>
-</body>
-</html>
+        <li><a href="{% url 'reiwa' %}" class="btn">令和何年ですかツール</a></li>
+    </ul>
+    
+    <div style="margin-top: 30px;">
+        <a href="/" class="btn btn-secondary">ホームに戻る</a>
+    </div>
+</div>
+{% endblock %}

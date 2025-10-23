@@ -1,14 +1,18 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>献立決定アプリ - Gemini AI</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-</head>
-<body>
-    <div class="container">
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Work 11 - 献立決定アプリ - Gemini AI{% endblock %}
+
+{% block subtitle %}
+<div class="page-subtitle">Work 11: Gemini AIを使った献立決定アプリ（材料から料理提案）</div>
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
         <h1>🍳 献立決定アプリ</h1>
         <p class="subtitle">お手持ちの材料を入力すると、Gemini AIがおすすめの料理を提案します</p>
         
@@ -85,34 +89,35 @@
         
         <!-- ナビゲーションリンク -->
         <div class="nav-links">
-            <a href="/">← トップページに戻る</a>
+            <a href="/" class="btn btn-secondary">← ホームに戻る</a>
         </div>
-    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // フォーム送信時のローディング表示
+    document.getElementById('ingredientForm').addEventListener('submit', function() {
+        const submitBtn = document.getElementById('submitBtn');
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '🤖 料理を考え中...';
+    });
     
-    <script>
-        // フォーム送信時のローディング表示
-        document.getElementById('ingredientForm').addEventListener('submit', function() {
-            const submitBtn = document.getElementById('submitBtn');
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '🤖 料理を考え中...';
-        });
-        
-        // 入力フィールドのEnterキーでフォーム送信を防ぐ
-        document.querySelectorAll('input[type="text"]').forEach(function(input) {
-            input.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    e.preventDefault();
-                    // 次の入力フィールドにフォーカス、または送信
-                    const inputs = Array.from(document.querySelectorAll('input[type="text"]'));
-                    const currentIndex = inputs.indexOf(this);
-                    if (currentIndex < inputs.length - 1) {
-                        inputs[currentIndex + 1].focus();
-                    } else {
-                        document.getElementById('submitBtn').click();
-                    }
+    // 入力フィールドのEnterキーでフォーム送信を防ぐ
+    document.querySelectorAll('input[type="text"]').forEach(function(input) {
+        input.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                // 次の入力フィールドにフォーカス、または送信
+                const inputs = Array.from(document.querySelectorAll('input[type="text"]'));
+                const currentIndex = inputs.indexOf(this);
+                if (currentIndex < inputs.length - 1) {
+                    inputs[currentIndex + 1].focus();
+                } else {
+                    document.getElementById('submitBtn').click();
                 }
-            });
+            }
         });
-    </script>
-</body>
-</html>
+    });
+</script>
+{% endblock %}

@@ -1,15 +1,19 @@
 <!-- TODOアプリの編集画面-->
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>タスク編集 - TODOアプリ</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'work10/style.css' %}">
-</head>
-<body>
-    <div class="container">
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Work 10 - タスク編集 - TODOアプリ{% endblock %}
+
+{% block subtitle %}
+<div class="page-subtitle">Work 10: タスクの編集</div>
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'work10/style.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
         <h1>TODOアプリ</h1>
         
         <!-- メッセージ表示 -->
@@ -48,6 +52,10 @@
             {% csrf_token %}
             <button type="submit" class="btn btn-danger">削除</button>
         </form>
+        
+    <div style="margin-top: 30px;">
+        <a href="{% url 'work10:top' %}" class="btn btn-secondary">一覧に戻る</a>
+        <a href="/" class="btn btn-secondary">ホームに戻る</a>
     </div>
-</body>
-</html>
+</div>
+{% endblock %}

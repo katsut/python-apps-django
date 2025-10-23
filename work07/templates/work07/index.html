@@ -1,16 +1,26 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <title>いろいろミニゲーム</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'work07/style.css' %}">
-</head>
-<body>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Work 07 - いろいろミニゲーム{% endblock %}
+
+{% block subtitle %}
+<div class="page-subtitle">Work 07: いろいろミニゲーム</div>
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'work07/style.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
     <h1>いろいろミニゲーム</h1>
 
     <ul>
-        <li><a href="{% url 'omikuji' %}">おみくじ</a></li>
+        <li><a href="{% url 'omikuji' %}" class="btn">おみくじ</a></li>
     </ul>
-</body>
-</html>
+    
+    <div style="margin-top: 30px;">
+        <a href="/" class="btn btn-secondary">ホームに戻る</a>
+    </div>
+</div>
+{% endblock %}

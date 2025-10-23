@@ -22,6 +22,7 @@ django_asgi_app = get_asgi_application()
 application = ProtocolTypeRouter(
     {
         "http": django_asgi_app,
+        # 認証を必須にする場合はAuthMiddlewareStackを使用
         "websocket": AuthMiddlewareStack(
             URLRouter(work12.routing.websocket_urlpatterns)
         ),

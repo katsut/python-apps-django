@@ -1,16 +1,26 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <title>Djangoのテストページ</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'work05/style.css' %}">
-</head>
-<body>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Work 05 - ポートフォリオの表示{% endblock %}
+
+{% block subtitle %}
+<div class="page-subtitle">Work 05: ポートフォリオの表示</div>
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'work05/style.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
     <h1>こんにちは、Django!</h1>
     <p>これはテンプレートから表示しています。</p>
     <p>私の名前は{{ name }}です。</p>
     <p>私の年齢は{{ age }}です。</p>
     <img src="{% static 'work05/images/image.png' %}" alt="なんか画像">
-</body>
-</html>
+    
+    <div style="margin-top: 30px;">
+        <a href="/" class="btn btn-secondary">ホームに戻る</a>
+    </div>
+</div>
+{% endblock %}

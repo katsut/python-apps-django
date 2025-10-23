@@ -1,16 +1,19 @@
 <!-- TODOアプリの一覧画面-->
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TODOアプリ</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'work09/style.css' %}">
-</head>
-<body>
-    <div class="container">
-        <h1>TODOアプリ</h1>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Work 09 - TODOアプリ{% endblock %}
+
+{% block subtitle %}
+<div class="page-subtitle">Work 09: TODOアプリ</div>
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'work09/style.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
         
         <!-- メッセージ表示 -->
         {% if messages %}
@@ -125,6 +128,9 @@
         {% else %}
             <p class="no-todos">まだタスクがありません。</p>
         {% endif %}
+        
+    <div style="margin-top: 30px;">
+        <a href="/" class="btn btn-secondary">ホームに戻る</a>
     </div>
-</body>
-</html>
+</div>
+{% endblock %}

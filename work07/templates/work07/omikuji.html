@@ -1,21 +1,32 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <title>おみくじ</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'work07/style.css' %}">
-</head>
-<body>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Work 07 - いろいろミニゲーム{% endblock %}
+
+{% block subtitle %}
+<div class="page-subtitle">Work 07: おみくじ</div>
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'work07/style.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
     <h1>おみくじ</h1>
 
     <form method="post">
         {% csrf_token %}
-        <button type="submit">おみくじを引く</button>
+        <button type="submit" class="btn">おみくじを引く</button>
     </form>
 
     {% if result %}
         <h2>結果: {{ result }}</h2>
     {% endif %}
-</body>
-</html>
+    
+    <div style="margin-top: 30px;">
+        <a href="/work07/" class="btn btn-secondary">Work 07のトップに戻る</a>
+        <a href="/" class="btn btn-secondary">ホームに戻る</a>
+    </div>
+</div>
+{% endblock %}

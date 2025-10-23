@@ -1,26 +1,33 @@
 <!-- メモ帳アプリの一覧画面-->
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>メモ帳アプリ</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'work08/style.css' %}">
-</head>
-<body>
-    <div class="container">
-        <h1>メモ帳アプリ</h1>
-        <a class="button" href="{% url 'create' %}">新規作成</a>
-        <hr>
-        <h2>メモ一覧</h2>
-        <div class="memos">
-            {% for memo in memos %}
-                <ul class="list-table">
-                    <li class="table-row"><a href="{% url 'edit' memo.id %}">編集</a><span>{{ memo.title }}</span></li>
-                </ul>
-            {% endfor %}
-        </div>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Work 08 - メモ帳アプリ{% endblock %}
+
+{% block subtitle %}
+<div class="page-subtitle">Work 08: メモ帳アプリ</div>
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'work08/style.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    <a class="btn" href="{% url 'create' %}">新規作成</a>
+    <hr>
+    <h2>メモ一覧</h2>
+    <div class="memos">
+        {% for memo in memos %}
+            <ul class="list-table">
+                <li class="table-row"><a href="{% url 'edit' memo.id %}">編集</a><span>{{ memo.title }}</span></li>
+            </ul>
+        {% endfor %}
     </div>
-</body>
-</html>
+    
+    <div style="margin-top: 30px;">
+        <a href="/" class="btn btn-secondary">ホームに戻る</a>
+    </div>
+</div>
+{% endblock %}

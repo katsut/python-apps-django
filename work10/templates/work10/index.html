@@ -1,21 +1,20 @@
 <!-- TODOアプリの一覧画面-->
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TODOアプリ</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'work10/style.css' %}">
-</head>
-<body>
-    <div class="container">
-        <header class="header">
-            <h1>TODOアプリ</h1>
-            <div class="nav-links">
-                <a href="/" class="btn btn-link">← トップページに戻る</a>
-            </div>
-        </header>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Work 10 - 認証機能付きTODOアプリ{% endblock %}
+
+{% block subtitle %}
+<div class="page-subtitle">Work 10: 認証機能付きTODOアプリ（ユーザー管理・権限制御）</div>
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'work10/style.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+        <h1>TODOアプリ</h1>
         
         <!-- メッセージ表示 -->
         {% if messages %}
@@ -150,6 +149,9 @@
         {% else %}
             <p class="no-todos">まだタスクがありません。</p>
         {% endif %}
+        
+    <div style="margin-top: 30px;">
+        <a href="/" class="btn btn-secondary">ホームに戻る</a>
     </div>
-</body>
-</html>
+</div>
+{% endblock %}

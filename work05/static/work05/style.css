@@ -1,9 +1,8 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #5c70e5;
-    margin: 20px;
-}
 
+/* Work05専用CSS */
+
+/* work05のコンテンツ用スタイル */
 h1 {
-    color: darkblue;
+    color: #2c3e50;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
