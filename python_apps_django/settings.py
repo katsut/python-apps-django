@@ -10,7 +10,11 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
+import os
 from pathlib import Path
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,7 +29,7 @@ SECRET_KEY = "django-insecure-(=dz7^n@t2-nek_#&*xspm#*mf1!g1!vv!w4ig_0v2xf)l1h$p
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]  # deploy for Railway
 
 
 # Application definition
@@ -54,6 +58,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",  # deployment setting for Railway
 ]
 
 ROOT_URLCONF = "python_apps_django.urls"
@@ -79,17 +84,24 @@ WSGI_APPLICATION = "python_apps_django.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+DATABASE_HOST = os.environ.get("DB_HOST")
+DATABASE_NAME = os.environ.get("DB_NAME")
+DATABASE_USER = os.environ.get("DB_USER")
+DATABASE_PASSWORD = os.environ.get("DB_PASSWORD")
+DATABASE_PORT = os.environ.get("DB_PORT") or "3306"
+
+
 DATABASES = {
     "default": {
         # "ENGINE": "django.db.backends.sqlite3",
         # "NAME": BASE_DIR / "db.sqlite3",
         # mysql settings
         "ENGINE": "django.db.backends.mysql",
-        "NAME": "2025_python_django",
-        "USER": "root",
-        "PASSWORD": "rootroot",
-        "HOST": "localhost",
-        "PORT": "3306",
+        "NAME": DATABASE_NAME,
+        "USER": DATABASE_USER,
+        "PASSWORD": DATABASE_PASSWORD,
+        "HOST": DATABASE_HOST,
+        "PORT": DATABASE_PORT,
     }
 }
 
@@ -120,6 +132,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = "static/"
+STATIC_ROOT = BASE_DIR / "staticfiles"  # deployment setting for Railway
+STATICFILES_DIRS = [BASE_DIR / "static"]  # deployment setting for Railway
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field

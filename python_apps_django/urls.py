@@ -21,6 +21,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.views.generic import CreateView
 from django.urls import path, include, reverse_lazy
 from . import views
+from django.contrib.auth import urls
 
 urlpatterns = [
     path("", views.index, name="index"),
