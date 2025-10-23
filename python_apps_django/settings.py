@@ -30,7 +30,9 @@ SECRET_KEY = "django-insecure-(=dz7^n@t2-nek_#&*xspm#*mf1!g1!vv!w4ig_0v2xf)l1h$p
 DEBUG = True
 
 ALLOWED_HOSTS = (os.environ.get("ALLOWED_HOSTS") or "").split(",")  # deploy for Railway
-
+CSRF_TRUSTED_ORIGINS = (os.environ.get("CSRF_TRUSTED_ORIGINS") or "").split(
+    ","
+)  # deploy for Railway
 
 # Application definition
 
