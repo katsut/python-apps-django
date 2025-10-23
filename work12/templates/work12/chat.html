@@ -13,21 +13,23 @@
 
 {% block content %}
 <div class="container">
-    <h1>リアルタイムチャット</h1>
-    <p>ログイン中: <strong>{{ user.username }}</strong></p>
     
     <div id="messages">
         {% for message in messages %}
-        <div class="message">
-            <span class="username">{{ message.username }}:</span>
-            {{ message.content }}
-            <span class="timestamp">({{ message.timestamp|date:"H:i" }})</span>
+        <div class="message {% if message.username == user.username %}my-message{% else %}other-message{% endif %}">
+            <div class="message-header">
+                <span class="username">{{ message.username }}</span>
+                <span class="timestamp">{{ message.timestamp|date:"H:i" }}</span>
+            </div>
+            <div class="message-content">{{ message.content|linebreaksbr }}</div>
         </div>
         {% endfor %}
     </div>
     
     <div class="input-container">
-        <input type="text" id="message-input" placeholder="メッセージを入力...">
+        <p><strong>{{ user.username }}</strong></p>
+        <textarea id="message-input" placeholder="メッセージを入力..." rows="3"></textarea>
+        <button id="send-button" type="button">送信</button>
     </div>
     
     <div style="margin-top: 30px;">
@@ -38,6 +40,9 @@
 
 {% block extra_js %}
 <script>
+    // 現在のユーザー名を取得
+    const currentUsername = '{{ user.username }}';
+    
     // WebSocket接続
     const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
     const wsUrl = protocol + '//' + window.location.host + '/ws/chat/';
@@ -47,20 +52,36 @@
     socket.onmessage = function(e) {
         const data = JSON.parse(e.data);
         const messages = document.getElementById('messages');
-        messages.innerHTML += '<div class="message"><span class="username">' + data.username + ':</span> ' + data.message + '</div>';
+        
+        // 自分の発言かどうかで異なるクラスを適用
+        const messageClass = data.username === currentUsername ? 'my-message' : 'other-message';
+        
+        // 現在の時刻を取得
+        const now = new Date();
+        const timeString = now.getHours().toString().padStart(2, '0') + ':' + 
+                          now.getMinutes().toString().padStart(2, '0');
+        
+        const messageDiv = document.createElement('div');
+        messageDiv.className = 'message ' + messageClass;
+        messageDiv.innerHTML = 
+            '<div class="message-header">' +
+                '<span class="username">' + data.username + '</span>' +
+                '<span class="timestamp">' + timeString + '</span>' +
+            '</div>' +
+            '<div class="message-content">' + data.message.replace(/\n/g, '<br>') + '</div>';
+        
+        messages.appendChild(messageDiv);
         messages.scrollTop = messages.scrollHeight;
     };
     
-    // Enterキーでメッセージ送信
-    document.getElementById('message-input').onkeypress = function(e) {
-        if (e.key === 'Enter') {
-            const messageInput = this;
-            if (messageInput.value.trim()) {
-                socket.send(JSON.stringify({
-                    'message': messageInput.value
-                }));
-                messageInput.value = '';
-            }
+    // 送信ボタンでメッセージ送信
+    document.getElementById('send-button').onclick = function() {
+        const messageInput = document.getElementById('message-input');
+        if (messageInput.value.trim()) {
+            socket.send(JSON.stringify({
+                'message': messageInput.value
+            }));
+            messageInput.value = '';
         }
     };
 </script>
