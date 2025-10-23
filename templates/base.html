@@ -26,7 +26,7 @@
             <div class="header-user">
                 {% if user.is_authenticated %}
                     <span class="user-info">{{ user.username }}さん</span>
-                    <form method="post" action="/logout/" style="display: inline-flex; align-items: center; margin: 0;">
+                    <form method="post" action="/logout/" style="display: inline;">
                         {% csrf_token %}
                         <button type="submit" class="header-logout-btn">ログアウト</button>
                     </form>
