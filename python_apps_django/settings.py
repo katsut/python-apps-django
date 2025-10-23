@@ -29,7 +29,7 @@ SECRET_KEY = "django-insecure-(=dz7^n@t2-nek_#&*xspm#*mf1!g1!vv!w4ig_0v2xf)l1h$p
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]  # deploy for Railway
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(",")  # deploy for Railway
 
 
 # Application definition
