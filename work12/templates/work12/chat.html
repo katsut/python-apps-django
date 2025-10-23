@@ -9,6 +9,7 @@
 </head>
 <body>
     <h1>リアルタイムチャット</h1>
+    <p>ログイン中: <strong>{{ user.username }}</strong> | <a href="{% url 'logout' %}">ログアウト</a></p>
     
     <div id="messages">
         {% for message in messages %}
@@ -21,7 +22,6 @@
     </div>
     
     <div class="input-container">
-        <input type="text" id="username-input" placeholder="名前" value="匿名">
         <input type="text" id="message-input" placeholder="メッセージを入力...">
     </div>
 
@@ -43,12 +43,12 @@
         document.getElementById('message-input').onkeypress = function(e) {
             if (e.key === 'Enter') {
                 const messageInput = this;
-                const usernameInput = document.getElementById('username-input');
-                socket.send(JSON.stringify({
-                    'message': messageInput.value,
-                    'username': usernameInput.value || '匿名'
-                }));
-                messageInput.value = '';
+                if (messageInput.value.trim()) {
+                    socket.send(JSON.stringify({
+                        'message': messageInput.value
+                    }));
+                    messageInput.value = '';
+                }
             }
         };
     </script>

@@ -7,6 +7,11 @@ from django.contrib.auth.models import User
 
 class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
+        # 認証確認
+        if not self.scope['user'].is_authenticated:
+            await self.close()
+            return
+            
         self.room_name = 'chat'
         self.room_group_name = f'chat_{self.room_name}'
 
@@ -27,10 +32,13 @@ class ChatConsumer(AsyncWebsocketConsumer):
     async def receive(self, text_data):
         text_data_json = json.loads(text_data)
         message = text_data_json['message']
-        username = text_data_json.get('username', '匿名')
+        
+        # 認証されたユーザーの名前を使用
+        user = self.scope['user']
+        username = user.username if user.is_authenticated else '匿名'
 
         # メッセージをデータベースに保存
-        await self.save_message(username, message)
+        await self.save_message(user, username, message)
 
         # グループの全員にメッセージを送信
         await self.channel_layer.group_send(
@@ -53,5 +61,9 @@ class ChatConsumer(AsyncWebsocketConsumer):
         }))
 
     @database_sync_to_async
-    def save_message(self, username, message):
-        Message.objects.create(username=username, content=message)
+    def save_message(self, user, username, message):
+        Message.objects.create(
+            user=user if user.is_authenticated else None,
+            username=username, 
+            content=message
+        )
