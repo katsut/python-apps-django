@@ -13,11 +13,14 @@ from channels.routing import ProtocolTypeRouter
 from django.core.asgi import get_asgi_application
 from channels.routing import URLRouter
 from channels.auth import AuthMiddlewareStack
-import work12.routing
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "python_apps_django.settings")
 
+# Django ASGIアプリケーションを先に初期化
 django_asgi_app = get_asgi_application()
+
+# Djangoが完全に初期化された後にwork12.routingをインポート
+import work12.routing  # noqa: E402
 
 application = ProtocolTypeRouter(
     {
