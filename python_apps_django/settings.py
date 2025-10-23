@@ -60,7 +60,6 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",  # deployment setting for Railway
 ]
 
 # setup basicauth middleware
@@ -102,9 +101,6 @@ DATABASE_PORT = os.environ.get("DB_PORT") or "3306"
 
 DATABASES = {
     "default": {
-        # "ENGINE": "django.db.backends.sqlite3",
-        # "NAME": BASE_DIR / "db.sqlite3",
-        # mysql settings
         "ENGINE": "django.db.backends.mysql",
         "NAME": DATABASE_NAME,
         "USER": DATABASE_USER,
@@ -141,8 +137,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = "static/"
-# STATIC_ROOT = BASE_DIR / "staticfiles"  # deployment setting for Railway
-# STATICFILES_DIRS = [BASE_DIR / "static"]  # deployment setting for Railway
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
