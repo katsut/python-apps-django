@@ -36,7 +36,8 @@ input[type="text"]:focus {
     border-color: #3498db;
 }
 
-.btn {
+/* フォーム内のボタンのみカスタマイズ */
+.form-section .btn {
     background-color: #3498db;
     color: white;
     padding: 15px 30px;
@@ -49,11 +50,11 @@ input[type="text"]:focus {
     margin-top: 20px;
 }
 
-.btn:hover {
+.form-section .btn:hover {
     background-color: #2980b9;
 }
 
-.btn:disabled {
+.form-section .btn:disabled {
     background-color: #bdc3c7;
     cursor: not-allowed;
 }
@@ -119,19 +120,19 @@ input[type="text"]:focus {
 }
 
 .nav-links {
-    text-align: center;
+    text-align: left;
     margin-top: 30px;
     padding-top: 20px;
     border-top: 1px solid #e9ecef;
 }
 
-.nav-links a {
+.nav-links a:not(.btn) {
     color: #3498db;
     text-decoration: none;
     margin: 0 15px;
 }
 
-.nav-links a:hover {
+.nav-links a:not(.btn):hover {
     text-decoration: underline;
 }
 

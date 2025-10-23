@@ -1,0 +1,95 @@
+/* ポップなカラーテーマ - CSS Custom Properties */
+
+:root {
+  /* === プライマリカラー（メインカラー） === */
+  --primary-color: #A8DADC;         /* ソフトブルー */
+  --primary-light: #E3F2F3;         /* ペールブルー */
+  --primary-dark: #7FB3B6;          /* ダークソフトブルー */
+  
+  /* === セカンダリカラー（アクセントカラー） === */
+  --secondary-color: #F1FAEE;       /* オフホワイト */
+  --secondary-light: #FFFFFF;       /* ピュアホワイト */
+  --secondary-dark: #E8F4F1;        /* ライトグレイッシュ */
+  
+  /* === アクセントカラー === */
+  --accent-color: #FFB3BA;          /* ソフトピンク */
+  --accent-light: #FFE0E3;          /* ペールピンク */
+  --accent-dark: #FF8A95;           /* ダークソフトピンク */
+  
+  /* === 状態カラー === */
+  --success-color: #B8E6B8;         /* ソフトグリーン */
+  --success-light: #E8F5E8;         /* ペールグリーン */
+  --success-dark: #90C695;          /* ダークソフトグリーン */
+  
+  --warning-color: #FFE5B4;         /* ソフトオレンジ */
+  --warning-light: #FFF3D9;         /* ペールオレンジ */
+  --warning-dark: #FFCC80;          /* ダークソフトオレンジ */
+  
+  --danger-color: #FFCCCB;          /* ソフトレッド */
+  --danger-light: #FFE6E6;          /* ペールレッド */
+  --danger-dark: #FF9A98;           /* ダークソフトレッド */
+  
+  /* === ニュートラルカラー（グレー系） === */
+  --gray-50: #FAFAFA;
+  --gray-100: #F5F5F5;
+  --gray-200: #EEEEEE;
+  --gray-300: #E0E0E0;
+  --gray-400: #BDBDBD;
+  --gray-500: #9E9E9E;
+  --gray-600: #757575;
+  --gray-700: #616161;
+  --gray-800: #424242;
+  --gray-900: #212121;
+  
+  /* === 背景カラー === */
+  --bg-primary: #FFFFFF;            /* 白背景 */
+  --bg-secondary: #F8F9FF;          /* 薄紫背景 */
+  --bg-light: #FAFBFC;              /* 薄いグレー背景 */
+  --bg-dark: var(--gray-800);       /* ダーク背景 */
+  
+  /* === テキストカラー === */
+  --text-primary: var(--gray-900);  /* メインテキスト */
+  --text-secondary: var(--gray-600); /* セカンダリテキスト */
+  --text-muted: var(--gray-500);    /* ミュートテキスト */
+  --text-white: #FFFFFF;            /* 白テキスト */
+  
+  /* === ボーダーカラー === */
+  --border-light: var(--gray-200);
+  --border-medium: var(--gray-300);
+  --border-dark: var(--gray-400);
+  
+  /* === シャドウ === */
+  --shadow-sm: 0 1px 3px rgba(168, 218, 220, 0.15);
+  --shadow-md: 0 4px 6px rgba(168, 218, 220, 0.2);
+  --shadow-lg: 0 10px 25px rgba(168, 218, 220, 0.25);
+  --shadow-xl: 0 20px 40px rgba(168, 218, 220, 0.3);
+  
+  /* === グラデーション（簡素化） === */
+  --gradient-primary: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+  --gradient-soft: linear-gradient(135deg, var(--primary-light), var(--secondary-color));
+  --gradient-accent: linear-gradient(135deg, var(--accent-light), var(--accent-color));
+  
+  /* === ホバーエフェクト === */
+  --hover-lift: translateY(-2px);
+  --hover-scale: scale(1.05);
+  
+  /* === トランジション === */
+  --transition-fast: 0.15s ease-in-out;
+  --transition-normal: 0.3s ease-in-out;
+  --transition-slow: 0.5s ease-in-out;
+  
+  /* === ボーダーラディウス === */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 50px;
+  
+  /* === スペーシング === */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+}

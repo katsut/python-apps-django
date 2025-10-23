@@ -1,38 +1,53 @@
 #messages {
-    border: 1px solid #ccc;
+    border: 2px solid var(--border-light);
     height: 400px;
     overflow-y: auto;
-    padding: 10px;
-    margin-bottom: 20px;
-    background-color: #f9f9f9;
+    padding: var(--space-md);
+    margin-bottom: var(--space-lg);
+    background: var(--primary-light);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
 }
 
 .message {
-    margin-bottom: 15px;
+    margin-bottom: var(--space-md);
     padding: 0;
     max-width: 70%;
     word-wrap: break-word;
     position: relative;
+    animation: fadeInUp 0.3s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .message-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 4px;
+    margin-bottom: var(--space-xs);
     font-size: 0.85em;
 }
 
 .message-content {
-    padding: 12px 16px;
-    border-radius: 18px;
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius-xl);
     line-height: 1.4;
+    box-shadow: var(--shadow-sm);
 }
 
 /* 自分の発言 */
 .my-message {
     margin-left: auto;
-    margin-right: 10px;
+    margin-right: var(--space-sm);
 }
 
 .my-message .message-header {
@@ -40,25 +55,25 @@
 }
 
 .my-message .username {
-    color: #007bff;
+    color: var(--primary-color);
     font-weight: bold;
 }
 
 .my-message .timestamp {
-    color: #666;
-    margin-left: 8px;
+    color: var(--text-muted);
+    margin-left: var(--space-sm);
 }
 
 .my-message .message-content {
-    background: linear-gradient(135deg, #007bff, #0056b3);
-    color: white;
+    background: var(--primary-color);
+    color: var(--gray-600);
     font-weight: 500;
-    border-radius: 18px;
+    border-radius: var(--radius-xl);
 }
 
 /* 他の人の発言 */
 .other-message {
-    margin-left: 10px;
+    margin-left: var(--space-sm);
     margin-right: auto;
 }
 
@@ -67,82 +82,96 @@
 }
 
 .other-message .username {
-    color: #007bff;
+    color: var(--primary-dark);
     font-weight: bold;
 }
 
 .other-message .timestamp {
-    color: #666;
-    margin-left: 8px;
+    color: var(--text-muted);
+    margin-left: var(--space-sm);
 }
 
 .other-message .message-content {
-    background-color: white;
-    color: #333;
-    border: 1px solid #e0e0e0;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-    border-radius: 18px;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    border: 2px solid var(--primary-light);
+    box-shadow: var(--shadow-sm);
+    border-radius: var(--radius-xl);
 }
 
 #message-input {
     flex: 1;
-    padding: 12px 16px;
+    padding: var(--space-sm) var(--space-md);
     font-size: 16px;
-    border: 2px solid #e0e0e0;
-    border-radius: 15px;
+    border: 2px solid var(--border-light);
+    border-radius: var(--radius-lg);
     outline: none;
-    transition: border-color 0.3s ease;
+    transition: var(--transition-normal);
     resize: vertical;
     min-height: 60px;
+    background: var(--bg-primary);
+    color: var(--text-primary);
 }
 
 #message-input:focus {
-    border-color: #a6c5e7;
-    box-shadow: 0 0 0 3px rgba(108, 155, 201, 0.1);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px var(--primary-light);
+    background: var(--bg-secondary);
 }
 
 #send-button {
-    padding: 12px 20px;
-    background-color: #007bff;
-    color: white;
+    padding: var(--space-sm) var(--space-lg);
+    background: var(--primary-color);
+    color: var(--gray-600);
     border: none;
-    border-radius: 15px;
+    border-radius: var(--radius-lg);
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: var(--transition-normal);
+    box-shadow: var(--shadow-sm);
 }
 
 #send-button:hover {
-    background-color: #0056b3;
+    transform: var(--hover-lift);
+    box-shadow: var(--shadow-md);
+    background: var(--primary-dark);
 }
 
 #send-button:active {
-    background-color: #004085;
+    transform: translateY(0);
+    box-shadow: var(--shadow-sm);
 }
 
 .input-container {
     display: flex;
-    gap: 15px;
+    gap: var(--space-md);
     align-items: center;
-    padding: 10px;
-    background-color: white;
-    border-radius: 30px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    margin-top: 10px;
+    padding: var(--space-md);
+    background: var(--bg-primary);
+    border-radius: var(--radius-full);
+    box-shadow: var(--shadow-lg);
+    margin-top: var(--space-md);
+    border: 2px solid var(--border-light);
 }
 
 .input-container p {
     margin: 0;
     font-weight: bold;
-    color: #007bff;
+    color: var(--gray-600);
     white-space: nowrap;
-    padding: 0 10px;
+    background: var(--primary-color);
+    border-radius: var(--radius-full);
+    padding: var(--space-xs) var(--space-md);
+    font-size: 14px;
 }
 
 /* コンテナの全体的なスタイル調整 */
 .container {
     max-width: 800px;
     margin: 0 auto;
-    padding: 20px;
+    padding: var(--space-lg);
+    background: var(--bg-primary);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
 }
