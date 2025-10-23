@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>リアルタイムチャット</title>
+    <link rel="stylesheet" href="{% static 'work12/style.css' %}">
+</head>
+<body>
+    <h1>リアルタイムチャット</h1>
+    
+    <div id="messages">
+        {% for message in messages %}
+        <div class="message">
+            <span class="username">{{ message.username }}:</span>
+            {{ message.content }}
+            <span class="timestamp">({{ message.timestamp|date:"H:i" }})</span>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <div class="input-container">
+        <input type="text" id="username-input" placeholder="名前" value="匿名">
+        <input type="text" id="message-input" placeholder="メッセージを入力...">
+    </div>
+
+    <script>
+        // WebSocket接続
+        const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+        const wsUrl = protocol + '//' + window.location.host + '/ws/chat/';
+        const socket = new WebSocket(wsUrl);
+        
+        // メッセージを受信したら画面に表示
+        socket.onmessage = function(e) {
+            const data = JSON.parse(e.data);
+            const messages = document.getElementById('messages');
+            messages.innerHTML += '<div class="message"><span class="username">' + data.username + ':</span> ' + data.message + '</div>';
+            messages.scrollTop = messages.scrollHeight;
+        };
+        
+        // Enterキーでメッセージ送信
+        document.getElementById('message-input').onkeypress = function(e) {
+            if (e.key === 'Enter') {
+                const messageInput = this;
+                const usernameInput = document.getElementById('username-input');
+                socket.send(JSON.stringify({
+                    'message': messageInput.value,
+                    'username': usernameInput.value || '匿名'
+                }));
+                messageInput.value = '';
+            }
+        };
+    </script>
+</body>
+</html>

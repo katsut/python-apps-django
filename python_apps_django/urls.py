@@ -33,6 +33,7 @@ urlpatterns = [
     path("work09/", include("work09.urls")),
     path("work10/", include("work10.urls")),
     path("work11/", include("work11.urls")),
+    path("work12/", include("work12.urls")),
     # 認証関連（プロジェクト全体）
     path(
         "login/",

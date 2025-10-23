@@ -29,10 +29,9 @@ SECRET_KEY = "django-insecure-(=dz7^n@t2-nek_#&*xspm#*mf1!g1!vv!w4ig_0v2xf)l1h$p
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# deploy setting for Railway
 ALLOWED_HOSTS = (os.environ.get("ALLOWED_HOSTS") or "").split(",")  # deploy for Railway
-CSRF_TRUSTED_ORIGINS = (os.environ.get("CSRF_TRUSTED_ORIGINS") or "").split(
-    ","
-)  # deploy for Railway
+CSRF_TRUSTED_ORIGINS = (os.environ.get("CSRF_TRUSTED_ORIGINS") or "").split(",")
 
 # Application definition
 
@@ -42,6 +41,7 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
+    "daphne",
     "django.contrib.staticfiles",
     "work05",
     "work06",
@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     "work09",
     "work10",
     "work11",
+    "work12",
 ]
 
 MIDDLEWARE = [
@@ -63,7 +64,10 @@ MIDDLEWARE = [
 ]
 
 # setup basicauth middleware
-if os.environ.get("ENABLE_BASIC_AUTH") or "false" == "true":
+if (os.environ.get("ENABLE_BASIC_AUTH") or "false") == "true":
+    print(
+        f"Enable Basic Auth Middleware in settings.py {os.environ.get('ENABLE_BASIC_AUTH')}"
+    )
     MIDDLEWARE.append("basicauth.middleware.BasicAuthMiddleware")
     BASICAUTH_USERS = {
         os.environ.get("BASIC_AUTH_USERNAME"): os.environ.get("BASIC_AUTH_PASSWORD"),
@@ -87,6 +91,10 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "python_apps_django.wsgi.application"
+ASGI_APPLICATION = "python_apps_django.asgi.application"
+
+# Channels settings
+CHANNEL_LAYERS = {"default": {"BACKEND": "channels.layers.InMemoryChannelLayer"}}
 
 
 # Database
