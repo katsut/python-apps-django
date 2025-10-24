@@ -4,7 +4,7 @@
 {% block title %}Work 07 - いろいろミニゲーム{% endblock %}
 
 {% block subtitle %}
-<div class="page-subtitle">Work 07: おみくじ</div>
+Work 07: おみくじ
 {% endblock %}
 
 {% block extra_css %}
@@ -13,11 +13,11 @@
 
 {% block content %}
 <div class="container">
-    <h1>おみくじ</h1>
+    <h2>おみくじ</h2>
 
     <form method="post">
         {% csrf_token %}
-        <button type="submit" class="btn">おみくじを引く</button>
+        <button type="submit" class="btn btn-primary">おみくじを引く</button>
     </form>
 
     {% if result %}

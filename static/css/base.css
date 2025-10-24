@@ -12,22 +12,12 @@ body {
     font-weight: 400;
 }
 
-/* メインコンテンツのコンテナ */
-.main-content {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    min-height: 60vh;
-    margin-bottom: var(--space-xl);
-}
-
 /* ヘッダー */
 .header {
-    background: linear-gradient(135deg, var(--primary-dark), #4A90A4);
+    background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
     padding: 0;
     border-radius: 0;
     box-shadow: var(--shadow-lg);
-    margin-bottom: var(--space-xl);
     position: sticky;
     top: 0;
     z-index: 1000;
@@ -168,22 +158,6 @@ body {
     box-shadow: var(--shadow-md);
 }
 
-.page-subtitle {
-    background: var(--bg-primary);
-    padding: var(--space-lg);
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-md);
-    margin-bottom: var(--space-xl);
-    text-align: center;
-    color: var(--text-secondary);
-    font-size: 18px;
-}
-
-/* メインコンテンツ */
-.main-content {
-    min-height: 60vh;
-    margin-bottom: var(--space-xl);
-}
 
 /* フッター */
 .footer {
@@ -226,6 +200,27 @@ body {
     padding-top: var(--space-lg);
 }
 
+
+/* メッセージスタイル */
+.alert {
+    padding: var(--space-sm) var(--space-lg);
+    margin: var(--space-md) 0;
+    border-radius: var(--radius-sm);
+    font-weight: 500;
+}
+
+.alert-success {
+    background-color: var(--success-light);
+    color: var(--success-dark);
+    border: 1px solid var(--success-color);
+}
+
+.alert-error {
+    background-color: var(--danger-light);
+    color: var(--danger-dark);
+    border: 1px solid var(--danger-color);
+}
+
 /* 共通コンテナ */
 .container {
     background: var(--bg-primary);
@@ -240,6 +235,138 @@ body {
     border-radius: var(--radius-md);
     margin: var(--space-lg) 0;
     box-shadow: var(--shadow-lg);
+}
+
+.main-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 10px;
+    min-height: 60vh;
+    margin-bottom: var(--space-xl);
+}
+
+.page-subtitle {
+    background: var(--bg-primary);
+    padding: var(--space-lg);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    margin-bottom: var(--space-xl);
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 18px;
+}
+
+/* 共通リストスタイル */
+ul, ol {
+    margin: var(--space-lg) 0;
+    padding-left: 0;
+}
+
+ul {
+    list-style: none;
+}
+
+/* 特定のクラスがない場合のみ適用するリストスタイル */
+ul:not(.list-table):not(.simple-list) li {
+    background: var(--bg-secondary);
+    margin: var(--space-sm) 0;
+    padding: var(--space-md);
+    border-radius: var(--radius-sm);
+    border-left: 4px solid var(--primary-color);
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition-normal);
+}
+
+ul:not(.list-table):not(.simple-list) li:hover {
+    background: var(--bg-light);
+    transform: var(--hover-lift);
+    box-shadow: var(--shadow-md);
+}
+
+ul:not(.list-table):not(.simple-list) li a {
+    text-decoration: none;
+    color: var(--text-primary);
+    font-weight: 500;
+    display: block;
+    padding: var(--space-sm) 0;
+}
+
+ul:not(.list-table):not(.simple-list) li a.btn {
+    background: var(--primary-color);
+    color: var(--text-white);
+    padding: var(--space-md) var(--space-lg);
+    border-radius: var(--radius-sm);
+    text-align: center;
+    font-weight: 600;
+    border: none;
+    margin: 0;
+}
+
+ul:not(.list-table):not(.simple-list) li a.btn:hover {
+    background: var(--primary-dark);
+    transform: none;
+}
+
+/* ナンバリング付きリスト */
+ol {
+    list-style: none;
+    counter-reset: list-counter;
+}
+
+ol li {
+    background: var(--bg-secondary);
+    margin: var(--space-sm) 0;
+    padding: var(--space-md);
+    border-radius: var(--radius-sm);
+    border-left: 4px solid var(--accent-color);
+    box-shadow: var(--shadow-sm);
+    counter-increment: list-counter;
+    position: relative;
+    transition: var(--transition-normal);
+}
+
+ol li:hover {
+    background: var(--bg-light);
+    transform: var(--hover-lift);
+    box-shadow: var(--shadow-md);
+}
+
+ol li::before {
+    content: counter(list-counter);
+    position: absolute;
+    left: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--accent-color);
+    color: var(--text-white);
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* シンプルなリストスタイル（.simple-listクラス用） */
+.simple-list {
+    list-style: disc;
+    padding-left: var(--space-lg);
+}
+
+.simple-list li {
+    background: none;
+    border: none;
+    box-shadow: none;
+    padding: var(--space-xs) 0;
+    margin: var(--space-xs) 0;
+}
+
+.simple-list li:hover {
+    background: none;
+    transform: none;
+    box-shadow: none;
 }
 
 /* 共通見出し */
@@ -270,123 +397,233 @@ p {
 }
 
 /* 共通ボタン */
+
 .btn {
     display: inline-block;
     padding: var(--space-sm) var(--space-lg);
-    background: var(--primary-color);
-    color: var(--gray-800);
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
     text-decoration: none;
-    border-radius: var(--radius-md);
     border: none;
+    border-radius: var(--radius-sm);
     cursor: pointer;
-    font-weight: bold;
     transition: var(--transition-normal);
-    margin: var(--space-xs);
+    margin-right: var(--space-sm);
 }
 
-.btn:hover {
-    background: var(--primary-dark);
+.btn-primary {
+    background-color: var(--success-color);
+    color: var(--text-white);
+}
+
+.btn-primary:hover {
+    background-color: var(--success-dark);
     transform: var(--hover-lift);
-    box-shadow: var(--shadow-md);
-}
-
-.btn-success {
-    background: var(--success-color);
-    color: var(--success-dark);
-}
-
-.btn-success:hover {
-    background: var(--success-dark);
-    color: var(--text-white);
-}
-
-.btn-danger {
-    background: var(--danger-color);
-    color: var(--danger-dark);
-}
-
-.btn-danger:hover {
-    background: var(--danger-dark);
-    color: var(--text-white);
 }
 
 .btn-secondary {
-    background: var(--gray-500);
+    background-color: var(--gray-500);
     color: var(--text-white);
 }
 
 .btn-secondary:hover {
-    background: var(--gray-600);
+    background-color: var(--gray-600);
+    text-decoration: none;
+    transform: var(--hover-lift);
+}
+
+.btn-danger {
+    background-color: var(--danger-color);
     color: var(--text-white);
+}
+
+.btn-danger:hover {
+    background-color: var(--danger-dark);
+    transform: var(--hover-lift);
+}
+
+.btn-success {
+    background-color: var(--success-color);
+    color: var(--text-white);
+}
+
+.btn-success:hover {
+    background-color: var(--success-dark);
+    transform: var(--hover-lift);
+}
+
+.btn-warning {
+    background-color: var(--warning-color);
+    color: var(--gray-800);
+}
+
+.btn-warning:hover {
+    background-color: var(--warning-dark);
+    transform: var(--hover-lift);
+}
+
+.btn-sm {
+    padding: var(--space-xs) var(--space-sm);
+    font-size: 12px;
+}
+
+.button-group {
+    margin-top: var(--space-lg);
+}
+
+.inline-header {
+    display: inline-block;
+    margin-right: 15px;
+    margin-bottom: 0;
+    vertical-align: middle;
+}
+
+.inline-header + .btn {
+    vertical-align: middle;
 }
 
 /* 共通テーブル */
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
+    margin-top: var(--space-lg);
 }
 
 table th, table td {
-    padding: 12px;
+    padding: var(--space-sm);
     text-align: left;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid var(--border-light);
 }
 
 table th {
-    background-color: #f8f9fa;
+    background-color: var(--bg-light);
     font-weight: bold;
 }
 
 table tr:hover {
-    background-color: #f8f9fa;
+    background-color: var(--bg-light);
 }
 
 /* 共通フォーム */
 form {
-    margin-top: 20px;
+    margin-top: var(--space-lg);
 }
 
 input, textarea, select {
     width: 100%;
-    padding: 10px;
-    margin: 8px 0;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    padding: var(--space-md);
+    margin: var(--space-sm) 0;
+    border: 2px solid var(--border-medium);
+    border-radius: var(--radius-sm);
     box-sizing: border-box;
     font-family: inherit;
+    background-color: var(--bg-primary);
+    font-size: 14px;
+    transition: var(--transition-normal);
+}
+
+input:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(177, 156, 217, 0.2);
+    background-color: var(--bg-secondary);
+}
+
+input:hover, textarea:hover, select:hover {
+    border-color: var(--border-dark);
 }
 
 label {
     display: block;
-    margin-top: 15px;
+    margin-top: var(--space-md);
     font-weight: bold;
-    color: #333;
+    color: var(--text-primary);
+}
+
+.create-form, .edit-form {
+    background-color: var(--bg-light);
+    padding: var(--space-lg);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-xl);
+    border: 1px solid var(--border-light);
+}
+
+.delete-form {
+    margin-top: var(--space-xl);
+    padding-top: var(--space-lg);
+    border-top: 1px solid var(--border-light);
+}
+
+.inline-delete-form {
+    display: inline;
+}
+
+.form-group {
+    margin-bottom: var(--space-md);
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: var(--space-xs);
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.form-control {
+    width: 100%;
+    padding: var(--space-sm) var(--space-sm);
+    border: 1px solid var(--border-medium);
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: var(--shadow-sm);
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.checkbox-group input[type="checkbox"] {
+    width: auto;
+    margin: 0;
+}
+
+.checkbox-group label {
+    margin: 0;
+    font-weight: normal;
 }
 
 /* 共通アラート */
 .alert {
-    padding: 15px;
-    margin: 20px 0;
-    border-radius: 4px;
+    padding: var(--space-md);
+    margin: var(--space-lg) 0;
+    border-radius: var(--radius-sm);
 }
 
 .alert-success {
-    background-color: #d4edda;
-    border: 1px solid #c3e6cb;
-    color: #155724;
+    background-color: var(--success-light);
+    border: 1px solid var(--success-color);
+    color: var(--success-dark);
 }
 
 .alert-danger {
-    background-color: #f8d7da;
-    border: 1px solid #f5c6cb;
-    color: #721c24;
+    background-color: var(--danger-light);
+    border: 1px solid var(--danger-color);
+    color: var(--danger-dark);
 }
 
 .alert-info {
-    background-color: #d1ecf1;
-    border: 1px solid #bee5eb;
-    color: #0c5460;
+    background-color: var(--primary-light);
+    border: 1px solid var(--primary-color);
+    color: var(--primary-dark);
 }
 
 /* レスポンシブ対応 */

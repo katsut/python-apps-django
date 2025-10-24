@@ -15,13 +15,15 @@
 {% block content %}
 <div class="container">
 
-    <a class="btn" href="{% url 'create' %}">新規作成</a>
-    <hr>
-    <h2>メモ一覧</h2>
+    <div class="header-with-button">
+        <h2>メモ一覧</h2>
+        <a class="btn btn-primary" href="{% url 'work08:create' %}">新規作成</a>
+    </div>
+
     <div class="memos">
         {% for memo in memos %}
             <ul class="list-table">
-                <li class="table-row"><a href="{% url 'edit' memo.id %}">編集</a><span>{{ memo.title }}</span></li>
+                <li class="table-row"><a href="{% url 'work08:edit' memo.id %}" class="btn btn-secondary btn-sm">編集</a><span>{{ memo.title }}</span></li>
             </ul>
         {% endfor %}
     </div>

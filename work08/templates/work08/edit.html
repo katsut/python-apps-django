@@ -5,7 +5,7 @@
 {% block title %}Work 08 - メモ帳アプリ - 編集{% endblock %}
 
 {% block subtitle %}
-<div class="page-subtitle">Work 08: メモ編集</div>
+Work 08: メモ編集
 {% endblock %}
 
 {% block extra_css %}
@@ -14,17 +14,16 @@
 
 {% block content %}
 <div class="container">
-    <h1>メモ帳アプリ - 編集</h1>
     <h2>メモ編集</h2>
     <form method="post">
         {% csrf_token %}
         <!-- MemoFormを使用してフォームを表示 -->
         {{ form.as_p }}
-        <button class="btn" type="submit">保存</button>
+        <button class="btn btn-primary" type="submit">保存</button>
     </form>
     
     <div style="margin-top: 30px;">
-        <a href="{% url 'index' %}" class="btn btn-secondary">メモ一覧に戻る</a>
+        <a href="{% url 'work08:index' %}" class="btn btn-secondary">メモ一覧に戻る</a>
         <a href="/" class="btn btn-secondary">ホームに戻る</a>
     </div>
 </div>

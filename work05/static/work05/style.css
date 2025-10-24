@@ -3,6 +3,6 @@
 
 /* work05のコンテンツ用スタイル */
 h1 {
-    color: #2c3e50;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    color: var(--gray-800);
+    text-shadow: var(--shadow-sm);
 }

@@ -4,7 +4,7 @@
 {% block title %}Work 06 - いろいろ計算ツール{% endblock %}
 
 {% block subtitle %}
-<div class="page-subtitle">Work 06: 令和何年ですかツール</div>
+Work 06: 令和何年ですかツール
 {% endblock %}
 
 {% block extra_css %}
@@ -13,12 +13,11 @@
 
 {% block content %}
 <div class="container">
-    <h1>令和何年ですかツール</h1>
 
-    <form method="post">
+    <form method="post" class="edit-form">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit" class="btn">変換</button>
+        <button type="submit" class="btn btn-primary">変換</button>
     </form>
 
     {% if result %}

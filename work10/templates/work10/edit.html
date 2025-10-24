@@ -5,7 +5,7 @@
 {% block title %}Work 10 - タスク編集 - TODOアプリ{% endblock %}
 
 {% block subtitle %}
-<div class="page-subtitle">Work 10: タスクの編集</div>
+Work 10: タスクの編集
 {% endblock %}
 
 {% block extra_css %}
@@ -14,7 +14,6 @@
 
 {% block content %}
 <div class="container">
-        <h1>TODOアプリ</h1>
         
         <!-- メッセージ表示 -->
         {% if messages %}
@@ -26,7 +25,13 @@
         {% endif %}
         
         <!-- タスク編集フォーム -->
-        <h2>タスクの編集</h2>
+        <div class="edit-header">
+            <h2>タスクの編集</h2>
+            <form method="post" action="{% url 'work10:delete' todo.id %}" class="inline-delete-form" onsubmit="return confirm('本当に削除しますか？');">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">削除</button>
+            </form>
+        </div>
         <form method="post" action="{% url 'work10:update' todo.id %}" class="edit-form">
             {% csrf_token %}
             <div class="form-group">
@@ -47,12 +52,7 @@
             </div>
         </form>
         
-        <!-- 削除フォーム -->
-        <form method="post" action="{% url 'work10:delete' todo.id %}" class="delete-form" onsubmit="return confirm('本当に削除しますか？');">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-danger">削除</button>
-        </form>
-        
+
     <div style="margin-top: 30px;">
         <a href="{% url 'work10:top' %}" class="btn btn-secondary">一覧に戻る</a>
         <a href="/" class="btn btn-secondary">ホームに戻る</a>

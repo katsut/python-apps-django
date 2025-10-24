@@ -2,9 +2,9 @@
 
 :root {
   /* === プライマリカラー（メインカラー） === */
-  --primary-color: #A8DADC;         /* ソフトブルー */
-  --primary-light: #E3F2F3;         /* ペールブルー */
-  --primary-dark: #7FB3B6;          /* ダークソフトブルー */
+  --primary-color: #b19cd9;         /* 淡いパープル */
+  --primary-light: #e0d4ff;         /* ペールパープル */
+  --primary-dark: #9370db;          /* ダークパープル */
   
   /* === セカンダリカラー（アクセントカラー） === */
   --secondary-color: #F1FAEE;       /* オフホワイト */
@@ -12,22 +12,22 @@
   --secondary-dark: #E8F4F1;        /* ライトグレイッシュ */
   
   /* === アクセントカラー === */
-  --accent-color: #FFB3BA;          /* ソフトピンク */
-  --accent-light: #FFE0E3;          /* ペールピンク */
-  --accent-dark: #FF8A95;           /* ダークソフトピンク */
+  --accent-color: #e91e63;          /* ピンク */
+  --accent-light: #FFB3BA;          /* ソフトピンク */
+  --accent-dark: #c2185b;           /* ダークピンク */
   
   /* === 状態カラー === */
-  --success-color: #B8E6B8;         /* ソフトグリーン */
-  --success-light: #E8F5E8;         /* ペールグリーン */
-  --success-dark: #90C695;          /* ダークソフトグリーン */
+  --success-color: #51e48e;         /* グリーン */
+  --success-light: #B8E6B8;         /* ソフトグリーン */
+  --success-dark: #33b569;          /* ダークグリーン */
   
   --warning-color: #FFE5B4;         /* ソフトオレンジ */
   --warning-light: #FFF3D9;         /* ペールオレンジ */
   --warning-dark: #FFCC80;          /* ダークソフトオレンジ */
   
-  --danger-color: #FFCCCB;          /* ソフトレッド */
-  --danger-light: #FFE6E6;          /* ペールレッド */
-  --danger-dark: #FF9A98;           /* ダークソフトレッド */
+  --danger-color: #e74c3c;          /* レッド */
+  --danger-light: #FFCCCB;          /* ソフトレッド */
+  --danger-dark: #c0392b;           /* ダークレッド */
   
   /* === ニュートラルカラー（グレー系） === */
   --gray-50: #FAFAFA;
