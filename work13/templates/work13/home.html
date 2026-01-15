@@ -1,0 +1,253 @@
+{% extends 'work13/base.html' %}
+{% load static %}
+
+{% block title %}ホーム - PhotoShare SNS{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <!-- 投稿フォーム（ログインユーザーのみ） -->
+        {% if user.is_authenticated %}
+        <div class="col-12 mb-4">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="fas fa-plus-circle me-2"></i>新しい投稿</h5>
+                </div>
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data" action="{% url 'work13:create_post' %}">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            {{ form.image.label_tag }}
+                            {{ form.image }}
+                        </div>
+                        <div class="mb-3">
+                            {{ form.caption.label_tag }}
+                            {{ form.caption }}
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane me-2"></i>投稿する
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- 投稿一覧 -->
+        <div class="col-12">
+            {% if posts %}
+                {% for post in posts %}
+                <div class="card mb-4 post-card">
+                    <!-- 投稿者情報 -->
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-items-center">
+                            {% if post.author.userprofile.avatar %}
+                                <img src="{{ post.author.userprofile.avatar.url }}" 
+                                     alt="{{ post.author.username }}" 
+                                     class="rounded-circle me-3" 
+                                     width="40" height="40"
+                                     style="object-fit: cover;">
+                            {% else %}
+                                <i class="fas fa-user-circle fs-2 me-3 text-secondary"></i>
+                            {% endif %}
+                            <div>
+                                <h6 class="mb-0">
+                                    <a href="{% url 'work13:user_profile' post.author.username %}" 
+                                       class="text-decoration-none">
+                                        {{ post.author.username }}
+                                    </a>
+                                </h6>
+                                <small class="text-muted">{{ post.created_at|date:"Y/m/d H:i" }}</small>
+                            </div>
+                        </div>
+                        
+                        <!-- 投稿削除ボタン（本人のみ） -->
+                        {% if user == post.author %}
+                        <div class="dropdown">
+                            <button class="btn btn-link text-muted" type="button" data-bs-toggle="dropdown">
+                                <i class="fas fa-ellipsis-v"></i>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <form method="post" action="{% url 'work13:delete_post' post.id %}" 
+                                          onsubmit="return confirm('この投稿を削除しますか？')">
+                                        {% csrf_token %}
+                                        <button type="submit" class="dropdown-item text-danger">
+                                            <i class="fas fa-trash me-2"></i>削除
+                                        </button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- 投稿画像 -->
+                    <div class="post-image-container">
+                        <img src="{{ post.image.url }}" 
+                             alt="投稿画像" 
+                             class="card-img-top post-image"
+                             style="max-height: 500px; object-fit: cover;">
+                    </div>
+
+                    <!-- いいね・コメントボタン -->
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col">
+                                {% if user.is_authenticated %}
+                                    <button class="btn btn-link p-0 me-3 like-btn" 
+                                            data-post-id="{{ post.id }}"
+                                            data-liked="{% if post.user_has_liked %}true{% else %}false{% endif %}">
+                                        <i class="{% if post.user_has_liked %}fas text-danger{% else %}far{% endif %} fa-heart fa-lg"></i>
+                                    </button>
+                                {% endif %}
+                                <a href="{% url 'work13:post_detail' post.id %}" class="btn btn-link p-0">
+                                    <i class="far fa-comment fa-lg"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- いいね数 -->
+                        <div class="mb-2">
+                            <strong class="like-count">{{ post.like_count }}</strong> いいね
+                        </div>
+
+                        <!-- キャプション -->
+                        {% if post.caption %}
+                        <div class="mb-3">
+                            <strong>{{ post.author.username }}</strong> {{ post.caption }}
+                        </div>
+                        {% endif %}
+
+                        <!-- コメント数 -->
+                        {% if post.comment_count > 0 %}
+                        <div class="mb-2">
+                            <a href="{% url 'work13:post_detail' post.id %}" class="text-muted text-decoration-none">
+                                {{ post.comment_count }}件のコメントをすべて表示
+                            </a>
+                        </div>
+                        {% endif %}
+
+                        <!-- コメント入力（ログインユーザーのみ） -->
+                        {% if user.is_authenticated %}
+                        <div class="row">
+                            <div class="col">
+                                <form method="post" action="{% url 'work13:add_comment' post.id %}" class="comment-form">
+                                    {% csrf_token %}
+                                    <div class="input-group">
+                                        <input type="text" name="content" class="form-control" 
+                                               placeholder="コメントを追加..." required>
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fas fa-paper-plane"></i>
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+
+                <!-- ページネーション -->
+                {% if posts.has_other_pages %}
+                <nav aria-label="投稿ページネーション">
+                    <ul class="pagination justify-content-center">
+                        {% if posts.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page=1">最初</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ posts.previous_page_number }}">前へ</a>
+                            </li>
+                        {% endif %}
+
+                        <li class="page-item active">
+                            <span class="page-link">
+                                {{ posts.number }} / {{ posts.paginator.num_pages }}
+                            </span>
+                        </li>
+
+                        {% if posts.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ posts.next_page_number }}">次へ</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ posts.paginator.num_pages }}">最後</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+                {% endif %}
+            {% else %}
+                <!-- 投稿がない場合 -->
+                <div class="text-center py-5">
+                    <i class="fas fa-camera fa-5x text-muted mb-3"></i>
+                    <h3 class="text-muted">投稿がありません</h3>
+                    {% if user.is_authenticated %}
+                        <p class="text-muted">最初の投稿をしてみましょう！</p>
+                        <a href="{% url 'work13:create_post' %}" class="btn btn-primary">
+                            <i class="fas fa-plus-circle me-2"></i>投稿する
+                        </a>
+                    {% else %}
+                        <p class="text-muted">ログインして投稿を見てみましょう</p>
+                        <a href="{% url 'login' %}" class="btn btn-primary">
+                            <i class="fas fa-sign-in-alt me-2"></i>ログイン
+                        </a>
+                    {% endif %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+$(document).ready(function() {
+    // いいねボタンのクリック処理
+    $('.like-btn').click(function() {
+        const button = $(this);
+        const postId = button.data('post-id');
+        const icon = button.find('i');
+        const likeCount = button.closest('.card-body').find('.like-count');
+        
+        $.post(`/work13/post/${postId}/like/`, {
+            csrfmiddlewaretoken: csrftoken
+        }).done(function(data) {
+            // いいね状態を切り替え
+            if (data.liked) {
+                icon.removeClass('far').addClass('fas text-danger');
+                button.data('liked', 'true');
+            } else {
+                icon.removeClass('fas text-danger').addClass('far');
+                button.data('liked', 'false');
+            }
+            
+            // いいね数を更新
+            likeCount.text(data.like_count);
+        }).fail(function() {
+            alert('エラーが発生しました。');
+        });
+    });
+
+    // 画像プレビュー機能
+    $('input[type="file"]').change(function() {
+        const file = this.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                // プレビュー表示処理
+                let preview = $('#image-preview');
+                if (preview.length === 0) {
+                    preview = $('<div id="image-preview" class="mt-2"><img class="img-fluid rounded" style="max-height: 200px;"></div>');
+                    $(this).closest('.mb-3').append(preview);
+                }
+                preview.find('img').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(file);
+        }
+    });
+});
+</script>
+{% endblock %}
