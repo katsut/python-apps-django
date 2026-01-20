@@ -3,7 +3,6 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from dotenv import load_dotenv
 import os
-import time
 import json
 import google.generativeai as genai
 from .forms import IngredientForm
@@ -65,19 +64,23 @@ def call_gemini_api(ingredients, max_retries=1):
                     # レスポンステキストからJSONを抽出（```jsonタグが含まれている場合もある）
                     clean_text = response.text.strip()
                     if clean_text.startswith("```json"):
-                        clean_text = clean_text.replace("```json", "").replace("```", "").strip()
+                        clean_text = (
+                            clean_text.replace("```json", "").replace("```", "").strip()
+                        )
                     elif clean_text.startswith("```"):
                         clean_text = clean_text.replace("```", "").strip()
-                    
+
                     recipe_data = json.loads(clean_text)
-                    
+
                     return {
                         "error": False,
                         "dish_name": recipe_data.get("dish_name", "料理名不明"),
-                        "additional_ingredients": recipe_data.get("additional_ingredients", "不明"),
+                        "additional_ingredients": recipe_data.get(
+                            "additional_ingredients", "不明"
+                        ),
                         "description": recipe_data.get("description", "説明なし"),
                         "ingredients_used": ingredients,
-                        "raw_text": response.text
+                        "raw_text": response.text,
                     }
                 except json.JSONDecodeError:
                     # JSON解析に失敗した場合は元のテキストを返す
